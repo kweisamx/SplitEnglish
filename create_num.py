@@ -26,22 +26,33 @@ def GetRandNum(nunber):
 	    randnum.append(str(randint(0,9)))
     return randnum
 
-def GetImage(element):
-    for i in range(len(element)):
-        e = cv2.imread(element[i]+'.jpg')
-        cv2.imshow(element[i],e)
 def CombineImage(blank,element):
     for i in range(len(element)):
         blank[:height , i*width:(i+1) * width ,:3] = cv2.imread(element[i]+'.jpg')
     cv2.imshow('all',blank)
+    return blank
+
+def ClearCombineImage(img):
+    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) # change the image to gray image
+    ret,binary = cv2.threshold(gray,127,255,cv2.THRESH_BINARY) # change the image to black and write
+
+    _ , contours, hierarchy  =  cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    cv2.drawContours(img,contours,-1,(0,0,255),3)  
+    cv2.imshow("img", img)  
+    cv2.waitKey(0)  
+
+
+
+
 n = GetRandNum(number)
 print(n)
 
 blankimg = Create_blank(width * number , height)
 
 cv2.imshow("all",blankimg)
-#GetImage(n)
-CombineImage(blankimg,n)
+img = CombineImage(blankimg,n)
+
+#ClearCombineImage(img)
 cv2.waitKey(0) 
 
 	
