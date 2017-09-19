@@ -3,13 +3,13 @@ import numpy as np
 from random import randint
 
 #CONST
-height = 130
-width = 65
+height = 107
+width = 57
 number = 3
 english_num= 3
 english_map = dict(zip((0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25),('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')))
 
-def Create_blank(width, height, rgb_color=(0, 0, 0)):
+def Create_blank(width, height, rgb_color=(255, 255, 255)):
     """Create new image(numpy array) filled with certain color in RGB"""
     # Create black blank image
     image = np.zeros((height, width, 3), np.uint8)
@@ -37,7 +37,9 @@ def GetRandNum(nunber,digist=True):
 
 def CombineImage(blank,element,name):
     for i in range(len(element)):
-        blank[:height , i*width:(i+1) * width ,:3] = cv2.imread(element[i]+'.jpg')
+        element_img = cv2.imread(element[i]+'.jpg')
+        h1,w1,_ = element_img.shape
+        blank[:h1 , i*w1:(i+1) * w1 ,:3] = element_img
     cv2.imshow(name,blank)
     return blank
 
@@ -55,7 +57,7 @@ def ClearCombineImage(img):
     ret,binary = cv2.threshold(gray,200,255,cv2.THRESH_BINARY) # change the image to black and write
 
     _ , contours, hierarchy  =  cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    cv2.drawContours(img,contours,-1,(0,0,255),3)  
+    cv2.drawContours(img,contours,-1,(0,0,0),1)  
     cv2.imshow("img", img)  
     cv2.waitKey(0)  
 
@@ -73,10 +75,10 @@ cv2.imshow("all",blankimg)
 img = CombineImage(blankimg,n,"digits")
 img_en = CombineImage(blankimg_en,e_n,"english")
 
-CombineTwoImage(img,img_en)
+combine_img = CombineTwoImage(img,img_en)
 
 
-#ClearCombineImage(img)
+ClearCombineImage(combine_img)
 cv2.waitKey(0) 
 
 	
