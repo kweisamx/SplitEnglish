@@ -2,12 +2,18 @@ import cv2
 import numpy as np
 
 def Cut(width_start,width,height_start,height,interval,alph,img):
-	for index ,element in enumerate(alph):
-		split_img = img[height_start:height_start + height , width_start : width + width_start]
+    for index ,element in enumerate(alph):
+        split_img = img[height_start:height_start + height , width_start : width + width_start]
 		#cv2.imshow(alph[index],split_img)
-		width_start = width_start + width + interval
-		cv2.imwrite(alph[index]+".jpg", split_img)
+        width_start = width_start + width + interval
+        binary_img = GetBinary(split_img)
+        cv2.imwrite(alph[index]+".jpg", binary_img)
 		#cv2.waitKey(0)
+
+def GetBinary(img):
+    gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    ret,binary = cv2.threshold(gray,230,255,cv2.THRESH_BINARY)
+    return binary
 
 img = cv2.imread('d.png')
 img2 = cv2.imread('e.png')

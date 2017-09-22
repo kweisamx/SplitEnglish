@@ -54,11 +54,12 @@ def CombineTwoImage(img1,img2):
 
 def ClearCombineImage(img):
     gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) # change the image to gray image
-    ret,binary = cv2.threshold(gray,200,255,cv2.THRESH_BINARY) # change the image to black and write
-
-    _ , contours, hierarchy  =  cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
-    cv2.drawContours(img,contours,-1,(0,0,0),1)  
-    cv2.imshow("img", img)  
+    ret,binary = cv2.threshold(gray,230,255,cv2.THRESH_BINARY) # change the image to black and write
+    #binary = cv2.adaptiveThreshold(gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY,11,2)
+ #   _ , contours, hierarchy  =  cv2.findContours(binary,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+ #   print(len(contours))
+ #   cv2.drawContours(img,contours,-1,(0,0,0),1)  
+    cv2.imshow("img", binary)  
     cv2.waitKey(0)  
 
 
@@ -78,7 +79,7 @@ img_en = CombineImage(blankimg_en,e_n,"english")
 combine_img = CombineTwoImage(img,img_en)
 
 
-ClearCombineImage(combine_img)
+#ClearCombineImage(combine_img)
 cv2.waitKey(0) 
 
 	
