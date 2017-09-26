@@ -98,7 +98,7 @@ combine_img = CombineTwoImage(img,img_en)
 (h,w) = combine_img.shape[:2]
 
 #resize_img = resize(combine_img,width = combine_img.shape[1] * 2, inter=cv2.INTER_AREA)
-resize_img = cv2.resize(combine_img, (int(w * resize_zoom) ,int( h * resize_zoom) ), interpolation=cv2.INTER_CUBIC)
+resize_img = cv2.resize(combine_img, (int(w * resize_zoom) ,int( h * resize_zoom)-10 ), interpolation=cv2.INTER_CUBIC)
 cv2.imshow("resize",resize_img)
 
 #ClearCombineImage(combine_img)
