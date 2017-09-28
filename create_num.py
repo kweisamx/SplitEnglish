@@ -69,7 +69,7 @@ def ClearCombineImage(img):
     cv2.waitKey(0) 
 
 
-def resize(img, width=None, height=None, inter=cv2.INTER_AREA):
+def Resize(img, width=None, height=None, inter=cv2.INTER_AREA):
     dim = None
     (h,w) = img.shape[:2]
     if width == None:
@@ -80,8 +80,19 @@ def resize(img, width=None, height=None, inter=cv2.INTER_AREA):
         dim = (width, int(h * r))
     resized = cv2.resize(img, dim, interpolation=inter)
     return resized
-
-
+def AffineImage(img,name):
+    r,c = img.shape[:2]
+    pts1 = np.float32([[0,0],[0,165],[650,0]])
+    pts2 = np.float32([[0,50],[30,150],[500,25]])
+    M = cv2.getAffineTransform(pts1,pts2)
+    res = cv2.warpAffine(img,M,(1000,400))
+    cv2.imshow(name,res)
+def PerspectiveImage(img,name):
+    img1 = np.float32([[0,0],[0,165],[650,0],[650,165]])
+    img2 = np.float32([[0,0],[0,165],[650,25],[650,125]])
+    h , mask = cv2.findHomography(img1,img2)
+    out = cv2.warpPerspective(img,h,(800,800))
+    cv2.imshow(name,out)
 
 n = GetRandNum(number)
 e_n = GetRandNum(english_num,False)# not digits
@@ -100,7 +111,8 @@ combine_img = CombineTwoImage(img,img_en)
 #resize_img = resize(combine_img,width = combine_img.shape[1] * 2, inter=cv2.INTER_AREA)
 resize_img = cv2.resize(combine_img, (int(w * resize_zoom) ,int( h * resize_zoom)-10 ), interpolation=cv2.INTER_CUBIC)
 cv2.imshow("resize",resize_img)
-
+#AffineImage(resize_img,"affine")
+PerspectiveImage(resize_img,"P_img")
 #ClearCombineImage(combine_img)
 cv2.waitKey(0) 
 
