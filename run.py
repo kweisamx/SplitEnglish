@@ -5,8 +5,11 @@ from optparse import OptionParser
 
 # Set parse
 
-parser = OptionParser()
-parser.add_option("-f","--fake",type='bool',dest='fake')
+parser = OptionParser()  
+parser.add_option("-f","--fake", action="store_true",dest="fake") 
+(options, args) = parser.parse_args()
+
+
 
 
 # The input of License Plate Number
@@ -24,7 +27,8 @@ if LPN_input!=None:
     # Create the blankimg of the LPN_input
     LPN_blankimg = Create_blank(width * number + (number - 1) * 4 , height)
     combine_img = CombineImage(LPN_blankimg,LPN_input,"manaual")
-    cv2.imwrite(LPN_input+'_fake.jpg',combine_img)
+    if options.fake:
+        cv2.imwrite(LPN_input+'_fake.jpg',combine_img)
     cv2.waitKey(0)
     
 else:
