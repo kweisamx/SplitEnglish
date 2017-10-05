@@ -8,7 +8,7 @@ width = 57
 number = 4
 english_num= 3
 english_map = dict(zip((0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25),('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')))
-resize_zoom = 0.15
+resize_zoom = 0.2
 
 def Create_blank(width, height, rgb_color=(255, 255, 255)):
     """Create new image(numpy array) filled with certain color in RGB"""
@@ -39,7 +39,7 @@ def GetRandNum(number,digist=True):
 def CombineImage(blank,element,name):
     w1_start = 0
     for i in range(len(element)):
-        element_img = cv2.imread(element[i]+'.jpg')
+        element_img = cv2.imread('data/'+element[i]+'.jpg')
         h1,w1,_ = element_img.shape
         blank[:h1 , w1_start : w1_start + w1 ,:3] = element_img
         w1_start = w1_start +w1
