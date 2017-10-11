@@ -1,12 +1,15 @@
 from create_num import *
 import sys
 from optparse import OptionParser
-
+from erode_dilate import *
 
 # Set parse
 
 parser = OptionParser()  
 parser.add_option("-c","--create", action="store_true",dest="create",help="save the image to current directory") 
+parser.add_option("-e","--erode", action="store_true",dest="erode",help="erode the img") 
+parser.add_option("-d","--dilate", action="store_true",dest="dilate",help="dilate") 
+parser.add_option("-s","--struct-size",type="int",dest="struct_element",help="input the structuring element size",default=1)
 parser.add_option("-n","--name",dest="name",help="input the name which you want to creaete",default=None)
 parser.add_option("-z","--zoom-size",type="float",dest="zoom_size",help="input the zoom size you want resize",default=resize_zoom)
 (options, args) = parser.parse_args()
@@ -20,6 +23,7 @@ LPN_input = options.name
 
 resize_zoom = options.zoom_size
 
+se = options.struct_element
 
 # If no input, the number will be randomly created
 
@@ -47,8 +51,12 @@ else:
 
 (h,w) = combine_img.shape[:2]
 
-print(combine_img.shape[:2])
 print(w,w * resize_zoom ,h, h*resize_zoom)
+
+if options.erode:
+    combine_img = Erode(combine_img,se)
+if options.dilate:
+    combine_img = Dilate(combine_img,se)
 
 # Resize the img size
 resize_img = cv2.resize(combine_img, (int(w * resize_zoom) ,int( h * resize_zoom) ), interpolation=cv2.INTER_AREA)
