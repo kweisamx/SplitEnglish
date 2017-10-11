@@ -7,6 +7,7 @@ height = 107
 width = 57
 number = 4
 english_num= 3
+interval = 8
 english_map = dict(zip((0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25),('a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z')))
 resize_zoom = 0.2
 
@@ -44,8 +45,8 @@ def CombineImage(blank,element,name):
         blank[:h1 , w1_start : w1_start + w1 ,:3] = element_img
         w1_start = w1_start +w1
         if i != len(element) - 1 :
-            blank[:h1 , w1_start:w1_start + 4,:3] = Create_blank(4,h1)
-            w1_start = w1_start + 4
+            blank[:h1 , w1_start:w1_start + interval,:3] = Create_blank(interval,h1)
+            w1_start = w1_start + interval
     cv2.imshow(name,blank)
     return blank
 
