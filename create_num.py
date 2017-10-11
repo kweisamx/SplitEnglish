@@ -47,7 +47,14 @@ def CombineImage(blank,element,name):
         if i != len(element) - 1 :
             blank[:h1 , w1_start:w1_start + interval,:3] = Create_blank(interval,h1)
             w1_start = w1_start + interval
-    cv2.imshow(name,blank)
+    #cv2.imshow(name,blank)
+    return blank
+
+# add the white interval at the img up and down
+def Addhat(img,interval):
+    (h,w) = img.shape[:2]
+    blank = Create_blank(w,h+2*interval)# Create a white space
+    blank[interval:h + interval,:w,:3] = img
     return blank
 
 def CombineTwoImage(img1,img2):

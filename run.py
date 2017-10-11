@@ -43,12 +43,12 @@ else:
     blankimg_en = Create_blank(width * english_num + (english_num-1) * interval , height)
     #blankimg_all = Create_blank(width * (number + english_num) +(number+ english_num - 2) * 4 ,height)
 
-    cv2.imshow("all",blankimg)
+    #cv2.imshow("all",blankimg)
     img = CombineImage(blankimg,n,"digits")
     img_en = CombineImage(blankimg_en,e_n,"english")
 
     combine_img = CombineTwoImage(img,img_en)
-
+combine_img = Addhat(combine_img,interval)
 (h,w) = combine_img.shape[:2]
 
 print(w,w * resize_zoom ,h, h*resize_zoom)
